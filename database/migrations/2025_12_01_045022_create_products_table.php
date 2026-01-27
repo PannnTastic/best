@@ -15,10 +15,9 @@ return new class extends Migration
             $table->id('product_id');
             $table->foreignId('category_id')->constrained('categories','category_id')->onDelete('cascade');
             $table->string('nama_produk');
-            $table->decimal('harga', 10, 2);
+            $table->decimal('harga', 15, 2);
             $table->text('deskripsi')->nullable();
             $table->integer('stok')->default(0);
-            $table->string('gambar_url')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
