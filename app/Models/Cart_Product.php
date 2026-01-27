@@ -9,4 +9,7 @@ class Cart_Product extends Model
 {
     /** @use HasFactory<\Database\Factories\CartProductFactory> */
     use HasFactory;
+
+    protected $guarded = [];
+
 }
