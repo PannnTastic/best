@@ -13,4 +13,9 @@ class Picture extends Model
     protected $primaryKey = 'picture_id';
 
     protected $guarded = [];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id', 'product_id');
+    }
 }
