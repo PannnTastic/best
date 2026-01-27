@@ -9,4 +9,8 @@ class Picture extends Model
 {
     /** @use HasFactory<\Database\Factories\PictureFactory> */
     use HasFactory;
+
+    protected $primaryKey = 'picture_id';
+
+    protected $guarded = [];
 }

@@ -9,4 +9,8 @@ class Blog extends Model
 {
     /** @use HasFactory<\Database\Factories\BlogFactory> */
     use HasFactory;
+
+    protected $primaryKey = 'blog_id';
+
+    protected $guarded = [];
 }
