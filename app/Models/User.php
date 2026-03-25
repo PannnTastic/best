@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    protected $primaryKey = 'user_id';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -19,6 +21,7 @@ class User extends Authenticatable
     protected $fillable = [
         'nama_lengkap',
         'email',
+        'phone',
         'password',
         'role',
     ];
@@ -46,7 +49,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function carts(){
+    public function carts()
+    {
         return $this->hasMany(Cart::class, 'user_id');
+    }
+
+    public function addresses()
+    {
+        return $this->hasMany(Address::class, 'user_id');
+    }
+
+    public function primaryAddress()
+    {
+        return $this->hasOne(Address::class, 'user_id')->where('is_primary', true);
     }
 }
