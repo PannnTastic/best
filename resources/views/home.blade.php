@@ -4,20 +4,31 @@
 
 @section('content')
 <!-- Hero Section -->
-<div class="relative bg-gray-900 h-[500px] overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-r from-[#0F3075]/80 to-[#0F3075]/40 z-10"></div>
+<div class="relative bg-gray-900 h-[500px] overflow-hidden z-20" x-data="heroSlider()" x-init="init()">
+    <!-- Background Images -->
     <div class="absolute inset-0 z-0">
-         @if(isset($pictures) && $pictures->count() > 0)
-            <img src="{{ asset('storage/' . $pictures->first()->path) }}" alt="Banner" class="w-full h-full object-cover">
-        @else
-            <img src="https://images.unsplash.com/photo-1581094794329-cd8119699f82?q=80&w=2600&auto=format&fit=crop" alt="Banner" class="w-full h-full object-cover">
-        @endif
+        <template x-for="(slide, index) in slides" :key="index">
+            <div x-show="currentSlide === index"
+                 x-transition:enter="transition-opacity duration-700"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition-opacity duration-700"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 class="absolute inset-0">
+                <img :src="slide.image" :alt="slide.title" class="w-full h-full object-cover">
+            </div>
+        </template>
     </div>
     
+    <!-- Gradient Overlay -->
+    <div class="absolute inset-0 bg-gradient-to-r from-[#0F3075]/80 to-[#0F3075]/40 z-10"></div>
+    
+    <!-- Content -->
     <div class="container mx-auto px-4 h-full flex items-center relative z-20">
         <div class="max-w-xl text-white">
-            <h2 class="text-orange-400 font-bold uppercase tracking-wide mb-2">Produk Terlaris</h2>
-            <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4">Temukan material terbaik untuk proyek konstruksi Anda</h1>
+            <h2 class="text-orange-400 font-bold uppercase tracking-wide mb-2" x-text="slides[currentSlide].subtitle">Produk Terlaris</h2>
+            <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-4" x-text="slides[currentSlide].title">Temukan material terbaik untuk proyek konstruksi Anda</h1>
             <a href="{{ route('products.index') }}" class="inline-block bg-white text-[#0F3075] font-bold py-3 px-8 rounded hover:bg-gray-100 transition">
                 Lihat Produk
             </a>
@@ -25,29 +36,85 @@
     </div>
 
     <!-- Navigation Arrows -->
-    <div class="absolute inset-0 flex items-center justify-between px-4 z-20 pointer-events-none">
-        <button class="w-12 h-12 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center text-white backdrop-blur-sm pointer-events-auto transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-        </button>
-        <button class="w-12 h-12 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center text-white backdrop-blur-sm pointer-events-auto transition">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-        </button>
-    </div>
+    <button @click="prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center text-white backdrop-blur-sm transition z-30">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+        </svg>
+    </button>
+    <button @click="nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/20 hover:bg-white/40 rounded-full flex items-center justify-center text-white backdrop-blur-sm transition z-30">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+        </svg>
+    </button>
 
     <!-- Slider Dots -->
-    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-        <div class="w-2 h-2 rounded-full bg-white"></div>
-        <div class="w-2 h-2 rounded-full bg-white/50"></div>
-        <div class="w-2 h-2 rounded-full bg-white/50"></div>
+    <div class="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-30">
+        <template x-for="(slide, index) in slides" :key="index">
+            <button @click="goToSlide(index)" 
+                    :class="{'bg-white': currentSlide === index, 'bg-white/50': currentSlide !== index}"
+                    class="w-2 h-2 rounded-full transition-all duration-300 hover:bg-white"></button>
+        </template>
     </div>
 </div>
 
+<script>
+function heroSlider() {
+    return {
+        currentSlide: 0,
+        slides: [
+            {
+                image: 'https://images.unsplash.com/photo-1581094794329-cd8119699f82?q=80&w=2600&auto=format&fit=crop',
+                title: 'Temukan material terbaik untuk proyek konstruksi Anda',
+                subtitle: 'Produk Terlaris'
+            },
+            {
+                image: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=2600&auto=format&fit=crop',
+                title: 'Kualitas Terjamin untuk Bangunan Anda',
+                subtitle: 'Garansi Resmi'
+            },
+            {
+                image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?q=80&w=2600&auto=format&fit=crop',
+                title: 'Solusi Lengkap Kebutuhan Konstruksi',
+                subtitle: 'One Stop Solution'
+            }
+        ],
+        autoplayInterval: null,
+        
+        init() {
+            this.startAutoplay();
+        },
+        
+        nextSlide() {
+            this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+            this.resetAutoplay();
+        },
+        
+        prevSlide() {
+            this.currentSlide = (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+            this.resetAutoplay();
+        },
+        
+        goToSlide(index) {
+            this.currentSlide = index;
+            this.resetAutoplay();
+        },
+        
+        startAutoplay() {
+            this.autoplayInterval = setInterval(() => {
+                this.nextSlide();
+            }, 5000); // Ganti slide setiap 5 detik
+        },
+        
+        resetAutoplay() {
+            clearInterval(this.autoplayInterval);
+            this.startAutoplay();
+        }
+    }
+}
+</script>
+
 <!-- Features -->
-<div class="container mx-auto px-4 -mt-16 relative z-30 mb-20">
+<div class="container mx-auto px-4 pt-12 relative z-10 mb-20">
     <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
         <!-- Feature 1 -->
         <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col justify-center h-48 border border-gray-100">
