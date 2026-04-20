@@ -19,8 +19,8 @@
     <header class="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div class="container mx-auto px-4 h-20 flex items-center justify-between">
             <!-- Logo -->
-            <a href="{{ route('home') }}" class="flex items-center gap-2">
-                <img src="{{ asset('images/logo-best.png') }}" alt="BEST Logo" class="h-10 w-auto">
+            <a href="{{ route('home') }}" class="flex items-center">
+                <img src="{{ asset('images/logo-best.png') }}" alt="BEST Logo" class="h-12 w-auto">
             </a>
 
             <!-- Navigation -->
