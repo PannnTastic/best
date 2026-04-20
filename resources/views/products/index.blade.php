@@ -33,7 +33,7 @@
                         @foreach($categories as $cat)
                         <li>
                             <a href="{{ route('products.index', array_merge(request()->query(), ['category' => $cat->category_id, 'page' => null])) }}" class="block px-3 py-2 rounded-lg text-sm {{ request('category') == $cat->category_id ? 'bg-orange-50 text-orange-600 font-medium' : 'text-gray-600 hover:bg-gray-50' }}">
-                                {{ $cat->category_name }}
+                                {{ $cat->nama_kategori }}
                             </a>
                         </li>
                         @endforeach
@@ -87,7 +87,7 @@
                         <a href="{{ route('products.show', $product->product_id) }}">
                             <div class="aspect-square bg-gray-200 relative overflow-hidden">
                                 @if($product->pictures->count() > 0)
-                                    <img src="{{ asset('storage/' . $product->pictures->first()->path) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                                    <img src="{{ asset('storage/' . $product->pictures->first()->path_gambar) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                                 @else
                                     <div class="w-full h-full flex items-center justify-center text-gray-400">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -103,7 +103,7 @@
                         </a>
                         <div class="p-4 flex-1 flex flex-col">
                             <div class="mb-2">
-                                <span class="text-xs text-gray-500 uppercase">{{ $product->category->category_name ?? 'Umum' }}</span>
+                                <span class="text-xs text-gray-500 uppercase">{{ $product->category->nama_kategori ?? 'Umum' }}</span>
                             </div>
                             <h3 class="font-bold text-slate-900 mb-1 truncate">
                                 <a href="{{ route('products.show', $product->product_id) }}" class="hover:text-[#0F3075]">{{ $product->nama_produk }}</a>

@@ -21,7 +21,7 @@
                     <!-- Main Image -->
                     <div class="relative aspect-square bg-gray-100 rounded-xl overflow-hidden mb-4 group">
                         @if($product->pictures->count() > 0)
-                            <img id="mainImage" src="{{ asset('storage/' . $product->pictures->first()->path) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-cover">
+                            <img id="mainImage" src="{{ asset('storage/' . $product->pictures->first()->path_gambar) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-cover">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-gray-400">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -46,8 +46,8 @@
                     <!-- Thumbnails -->
                     <div class="grid grid-cols-5 gap-3">
                         @foreach($product->pictures as $pic)
-                            <div onclick="changeImage('{{ asset('storage/' . $pic->path) }}')" class="aspect-square bg-gray-100 rounded-lg cursor-pointer border-2 {{ $loop->first ? 'border-[#0F3075]' : 'border-transparent hover:border-gray-300' }} overflow-hidden">
-                                <img src="{{ asset('storage/' . $pic->path) }}" alt="Thumbnail" class="w-full h-full object-cover">
+                            <div onclick="changeImage('{{ asset('storage/' . $pic->path_gambar) }}')" class="aspect-square bg-gray-100 rounded-lg cursor-pointer border-2 {{ $loop->first ? 'border-[#0F3075]' : 'border-transparent hover:border-gray-300' }} overflow-hidden">
+                                <img src="{{ asset('storage/' . $pic->path_gambar) }}" alt="Thumbnail" class="w-full h-full object-cover">
                             </div>
                         @endforeach
                         @if($product->pictures->count() == 0)
@@ -62,7 +62,7 @@
 
                 <!-- Product Info -->
                 <div>
-                    <p class="text-gray-500 text-sm mb-1">{{ $product->category->category_name ?? 'Kategori' }}</p>
+                    <p class="text-gray-500 text-sm mb-1">{{ $product->category->nama_kategori ?? 'Kategori' }}</p>
                     <h1 class="text-3xl font-bold text-slate-900 mb-2">{{ $product->nama_produk }}</h1>
                     
                     <div class="text-4xl font-bold text-slate-900 mb-4">

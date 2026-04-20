@@ -74,7 +74,7 @@
                             <div class="flex gap-4 pb-4 border-b last:border-0">
                                 <div class="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                                     @if($product->pictures->first())
-                                        <img src="{{ asset('storage/' . $product->pictures->first()->path) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-cover">
+                                        <img src="{{ asset('storage/' . $product->pictures->first()->path_gambar) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-cover">
                                     @else
                                         <div class="w-full h-full flex items-center justify-center text-gray-400">
                                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -85,7 +85,7 @@
                                 </div>
                                 <div class="flex-1">
                                     <h3 class="font-semibold text-slate-900">{{ $product->nama_produk }}</h3>
-                                    <p class="text-gray-500 text-sm">{{ $product->category->category_name ?? 'Umum' }}</p>
+                                    <p class="text-gray-500 text-sm">{{ $product->category->nama_kategori ?? 'Umum' }}</p>
                                     <div class="flex items-center justify-between mt-2">
                                         <span class="text-gray-600 text-sm">Qty: {{ $product->pivot->jumlah_produk }}</span>
                                         <span class="font-bold text-[#0F3075]">Rp{{ number_format($product->harga * $product->pivot->jumlah_produk, 0, ',', '.') }}</span>

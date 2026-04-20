@@ -243,7 +243,7 @@ function heroSlider() {
                 <a href="{{ route('products.show', $product->product_id) }}">
                     <div class="aspect-square bg-gray-200 relative overflow-hidden">
                         @if($product->pictures->count() > 0)
-                            <img src="{{ asset('storage/' . $product->pictures->first()->path) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                            <img src="{{ asset('storage/' . $product->pictures->first()->path_gambar) }}" alt="{{ $product->nama_produk }}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-gray-400">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
