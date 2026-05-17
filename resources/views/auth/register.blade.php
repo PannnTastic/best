@@ -121,7 +121,7 @@
                             <label for="kecamatan" class="block text-sm font-medium text-gray-700 mb-2">Kecamatan <span class="text-red-500">*</span></label>
                             <input type="text" name="kecamatan" id="kecamatan" value="{{ old('kecamatan') }}" required
                                 class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-[#0F3075] focus:ring-1 focus:ring-[#0F3075] @error('kecamatan') border-red-500 @enderror"
-                                placeholder="Contoh: Wonoayu">
+                                placeholder="Contoh: Sidoarjo">
                             @error('kecamatan')
                                 <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                             @enderror

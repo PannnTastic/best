@@ -31,6 +31,11 @@ Route::get('/brosur', function () {
     return view('brosur.index');
 })->name('brosur');
 
+// Contact
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
 // Cart & Checkout (Protected Routes)
 Route::middleware(['auth'])->group(function () {
     Route::get('/keranjang', [CartController::class, 'index'])->name('cart.index');
