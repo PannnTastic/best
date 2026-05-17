@@ -17,7 +17,11 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
-AGENTS.md
-BESt White@4x 1.png
-Brosur.png
-*.png
+
+# Ignore source design assets in root (already copied to public/images)
+/BEST White@4x 1.png
+/Brosur.png
+/Checkout.png
+/Group 4.png
+/Homepage.png
+/LOGO BEST 2 (PRIMARY) 1.png
